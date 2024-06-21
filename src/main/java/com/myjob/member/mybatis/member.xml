@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper      
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"      
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="member">
+
+<!--회원등록-->
+<insert id="register" parameterType="MemberVo">
+insert into users(id, name, password, email,email2 ,roadAddress,jibunAddress, phone1,phone2,phone3, addressDetail, birthday,gender) values(#{id}, #{name}, #{password}, #{email},
+#{email2}, #{roadAddress}, #{jibunAddress}, #{phone1}, #{phone2}, #{phone3} ,#{addressDetail}, #{birthday},#{gender})
+</insert>
+
+<!--일반로그인-->
+<select id="login" parameterType="String" resultType="MemberVo">
+select * from users where id=#{_parameter} 
+</select>
+
+</mapper>

@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>find</title>
+</head>
+<body>
+    <div>
+        <div class="change">
+           <div class="container col-md-6">
+            <div class="row">
+                
+                <div class="h2 text-center"><strong>아이디/비밀번호 찾기</strong></div>
+                <div class="h4 text-center">아이디/비밀번호가 생각나지 않으세요?</div>        
+
+            </div>
+                    <!-- Find Account : 아이디 찾기-->
+            <div class="row">
+               <form method="post" name="idsearch_form2" id="idsearch_form2"  onsubmit="idpwsearch(2);event.returnValue = false;">
+                            <input type="hidden" name="find_mode" value="2">
+                                    <div class="form-control mt-5">
+                                        <div class="text-bg-info text-center">회원가입시 입력하셨던 이름과 이메일을 입력해 주시면 회원정보를 이메일로 보내드립니다.</div>
+                                        <ul class="row">
+                                            <li class="mt-5"><label for="email_name" class="form-label">이름</label><input type="text" class="form-control" id="email_name" name="name" onKeyDown="inputSendit(2);"></li>
+                                            <li class="mt-5"><label for="email" class="form-label">이메일</label><input type="text" id="email" class="form-control" name="email" onKeyDown="inputSendit(2);"></li>
+                                        </ul>
+                                        <p class="btn btn-outline-primary  mt-3 d-grid gap-2"><a href="javascript:idpwsearch(2);">확인</a></p>
+                                    </div>
+                            </div>
+                        </form> 
+            </div>        
+                
+    
+                   
+            </div>
+    </div> 
+        </div>
+        
+    </div>
+</body>
+</html>

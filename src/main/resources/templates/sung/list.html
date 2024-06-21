@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>list</title>
+
+</head>
+<body>
+
+<div>
+    <div class="change">
+        <div class="container list">
+            <form name="frm" class="frm" method="post">
+                <div class="input-group justify-content-end mb-3">
+
+
+                    <label ><input type="text" class="form-control findStr" name="findStr"></label>
+                    
+                    <button class="btn btn-outline-primary btnRegister" type="button" >추가</button>
+
+                    <button class="btnSearch btn btn-outline-secondary " type="button" >검색</button>
+                </div>
+
+            </form>
+            <div class="container title">
+                <ul class="list-group list-group-horizontal ">
+                    <li class="list-group-item col-1  bg-secondary-subtle text-center id">아이디</li>
+                    <li class="list-group-item col-1 bg-tertiary-subtle text-center name">성명</li>
+                    <li class="list-group-item col-4 bg-danger-subtle text-center address1">주소</li>
+                    <li class="list-group-item col-3 bg-warning-subtle text-center phone">연락처</li>
+                    <li class="list-group-item col-3 bg-danger-subtle text-center email">email</li>
+                    
+                </ul>
+
+            </div>
+            <div class="container items">
+                <div class="item" >
+                    <ul class="list-group list-group-horizontal " th:each="d:${list}" >
+                        <li class="list-group-item col-1  text-center id">[[${d.id}]]</li>
+                        <li class="list-group-item col-1  text-center name">[[${d.name}]]</li>
+                        <li class="list-group-item col-4  text-center address1">[[${d.address}]]</li>
+                        <li class="list-group-item col-3  text-center phone">[[${d.phone}]]</li>
+                        <li class="list-group-item col-3  text-center phone">[[${d.email}]]</li>
+                       
+                    </ul>
+                </div>
+
+
+            </div>
+
+
+
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
