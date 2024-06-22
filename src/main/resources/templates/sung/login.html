@@ -50,7 +50,7 @@
                 <div class="row mt-5">
                     <button type="button" class="btn btn-danger" id="loginBtn" >로그인</button>
                 </div>
-                <script>
+                <!-- <script>
                   // 로그인
                   $(document).ready(function() {
                     $("#loginBtn").click(function(event) {
@@ -96,7 +96,48 @@
                         }
                     });
                 });
+                </script> -->
+
+                <script> 
+                   $(document).ready(function() {
+                    $("#loginBtn").click(function(event) {
+                        event.preventDefault(); // 기본 이벤트 동작 방지
+
+                        let id = document.querySelector("#inputId").value;
+                        let pwd = document.querySelector("#password").value;
+
+                        if (id.trim() !== "" && pwd.trim() !== "") {
+                            let $loginfrm = $(".loginfrm"); // $loginfrm 변수를 정의
+
+                            // serialize() 함수를 jQuery 객체에 직접 적용
+                            let frmData = $loginfrm.serialize();
+                            $.ajax({
+                                url: "/sung/login",
+                                type:"POST",
+                                data:frmData,
+                                success: function(resp){
+                                    if(resp.message==="false"){
+                                        alert("아이디, 비번을 확인하세요");
+                                    }else{
+                                      sessionStorage.setItem("id",id);
+                                      
+                                      location.href="/";
+                                        }
+
+                                    
+                                    }
+                                })
+                            }else{
+                                alert('아이디와 비번을 확인해주세요')
+                            }
+                        })
+                        
+                    })
+                        
+                    
+                    
                 </script>
+
 
                 <div class="row mt-5">
                     <div class="col-md-5">

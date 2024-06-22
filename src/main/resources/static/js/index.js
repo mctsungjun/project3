@@ -10,6 +10,37 @@ let loginForm=()=>{
         }
     })
 }
+//로그아웃 버튼 클릭됨-------------------
+let logOut=()=>{
+	$.ajax({
+		url:"/sung/logout",
+		type:"GET",
+		success:(resp)=>{
+			sessionStorage.setItem("id",null);
+			location.href="/";
+		}
+	})
+}
+//회원상세보기 보튼 클릭
+let detail = ()=>{
+	$.ajax({
+		url:"/sung/detail",
+		type:"GET",
+		success:(resp)=>{
+			let temp = $(resp).find(".change");
+			$(".change").html(temp);
+		}
+	})
+}
+let repreImage="";
+let change=(tag,photo)=>{
+	let allImg = document.querySelectorAll(".photo_list img");
+	allImg.forEach((img)=>{
+		img.style.border="5px solid blue";
+	})
+	tag.style.border="5px solid #aaa";
+	repreImage=photo;
+}
 
 
 //회원가입 버튼 클릭됨-----------------------------------------
@@ -23,7 +54,73 @@ let registerForm=()=>{
         }
     })
 }
+//이미지등록버튼 클릭됨
+function regiPhoto() {
+	// photoSection의 내용을 새로운 내용으로 변경
+	var photoSection = document.querySelector('.photoSection');
+	photoSection.innerHTML = `
+	<div class="container mt-5">
+	<div class="col-md-5 m-auto">	
+	<label>
+			<h6 class="text-success fw-bolder">파일첨부<h6>
+			<input type="file" id="fileInput" class="form-control" name="files" multiple onChange="fileChange(this)"/>
+		</label>
+		<br/>
+		<button type="button" class="btn btn-outline-primary" onClick="uploadFiles()">업로드</button>
+		<fieldset class="repre">
+                    <legend>대표이미지를 선택해 주세요</legend>
+                </fieldset>
+	</div>
+	</div>
+	`;
+}
+//대표이미지 선택
+let fileChange=(tag)=>{
+	let repre = document.querySelector(".repre");
+	repre.innerHTML = ''; // 하위태그 모두 삭제
+	let legend = document.createElement("legend");
+	legend.textcontent="대표이미지를 선택해주세요";
+	repre.appendChild(legend);
+	for(f of tag.files){
+		console.log(f.name);
+		let chkbox = document.createElement('input');
+		let label = document.createElement('label');
+		let br = document.createElement("br");
+		chkbox.type="radio";
+		chkbox.name="photo";
+		chkbox.value = f.name;
 
+		label.textContent=f.name;
+		label.prepend(chkbox);
+		
+		repre.appendChild(label);
+		repre.appendChild(br)
+	}
+}
+
+//사진/파일 업로드
+function uploadFiles(){
+	let input = document.getElementById('fileInput');
+	let frmData = new FormData();
+	let selectedPhoto = document.querySelector('input[name="photo"]:checked');
+	for (let i = 0; i < input.files.length; i++) {
+        frmData.append('files', input.files[i]); // 파일 추가
+    }
+	if(selectedPhoto){
+		frmData.append('reprePhoto',selectedPhoto.value); //선택된 대표이미지
+	}
+	$.ajax({
+		url:"/sung/upload",
+		type:"POST",
+		data:frmData,
+		processData:false,
+		contentType:false,
+		success:(resp)=>{
+			console.log(resp);
+			detail();
+		}
+	})
+}
 
 
 

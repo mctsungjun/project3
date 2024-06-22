@@ -1,5 +1,7 @@
 package com.myjob.member.vo;
 
+import java.util.List;
+
 import lombok.Data;
 
 @Data
@@ -20,6 +22,7 @@ public class MemberVo {
     String phone2;
     String phone3;
     String jibunAddress;
-    
+    String photo; //대표사진
+    List<PhotoVo> photos;
     
 }

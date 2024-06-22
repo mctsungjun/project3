@@ -3,9 +3,13 @@ package com.myjob.member.controller;
 
 
 
+import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -13,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.myjob.member.dao.MemberDao;
@@ -20,6 +25,7 @@ import com.myjob.member.passHash.PasswordHash;
 import com.myjob.member.service.KakaoApi;
 import com.myjob.member.service.NaverAPI;
 import com.myjob.member.vo.MemberVo;
+import com.myjob.member.vo.PhotoVo;
 
 import jakarta.servlet.http.HttpServletRequest;
 
@@ -39,6 +45,7 @@ public class MemberController {
    @Autowired
    KakaoApi kakaoApi;
    
+   static String uploadPath= "C:/Users/sung/Desktop/projectSet/3차/2cha/project_v1/member/src/main/resources/static/upload/";
     
     // 메인화면 보이기
     @RequestMapping(path="/")
@@ -58,13 +65,17 @@ public class MemberController {
     //로그인
     @RequestMapping(path="/sung/login")
     public ResponseEntity<Map<String, Object>> login(@RequestParam("id") String id,@RequestParam("password") String password, HttpSession session){
+        // 주석 처리 표시 는 필용없음
+        //System.out.println(id+"   "+password);
         Map<String, Object> response = new HashMap<>();
         MemberVo vo = dao.login(id,password);
         if(vo !=null){
             session.setAttribute("id", vo.getId());
+            session.setAttribute("name", vo.getName());
             response.put("message", "success");
             // response.put("htmlFile","sung/detail.html");
-            response.put("vo",vo);
+           
+            //response.put("vo",vo);
             System.out.println("로그인 되었습니다.");
         }else{
             response.put("message","false");
@@ -72,7 +83,69 @@ public class MemberController {
         }
         return ResponseEntity.ok(response);
     }
-    
+    //로그아웃
+    @RequestMapping(path="/sung/logout")
+    public void logout(HttpSession session){
+        session.setAttribute("id", null);
+        session.setAttribute("name", null);
+
+    }
+      //상세페이지로
+      @RequestMapping(path="/sung/detail")
+      public ModelAndView detail(HttpSession sesssion){
+          ModelAndView mv = new ModelAndView();
+          String id = (String)sesssion.getAttribute("id");
+          System.out.println("id:"  +id);
+          MemberVo vo = dao.detail(id);
+
+          mv.addObject("vo", vo);
+          mv.setViewName("sung/detail");
+          return mv;
+      }
+      //이미지/파일 업로드
+      @RequestMapping(path="/sung/upload")
+      public String fileUpload(@RequestParam("files") MultipartFile[] photo, HttpSession session, @RequestParam("reprePhoto") String reprePhoto){
+        //ModelAndView mv = new ModelAndView();
+        List<PhotoVo> photos = new ArrayList<>();
+        MemberVo vo = new MemberVo();
+        if (photo != null){
+            UUID uuid = null;
+            String sysFile = "";
+            for(MultipartFile f : photo){
+                if(f.getOriginalFilename().equals("")){
+                    continue;
+                }
+                // 파일업로드
+                uuid = UUID.randomUUID();
+                sysFile = String.format("%s-%s",uuid,f.getOriginalFilename());
+                File savefile = new File(uploadPath+sysFile);
+                try{
+                    f.transferTo(savefile);
+                }catch(Exception e){
+                    e.printStackTrace();
+                }
+                PhotoVo pv = new PhotoVo();
+               
+                pv.setOriPhoto(f.getOriginalFilename());
+                pv.setPhoto(sysFile);
+                photos.add(pv);
+                System.out.println(f.getOriginalFilename());
+
+            }
+            if(photos.size()>0){
+                vo.setPhotos(photos);
+                vo.setPhoto(reprePhoto);
+                vo.setId((String)session.getAttribute("id"));
+                System.out.println("vo: " +vo.getPhoto());
+            }
+        }
+        String msg = dao.fileUpload(vo);
+        return msg;
+      }
+
+    // 로그인 완료시 메인페이지 사용자 이름과 로그아웃 활성화
+
+
     // @RequestMapping(path="/sung/login")
     // public ModelAndView login(@RequestParam("id") String id,@RequestParam("password") String password, HttpSession session){
     //     ModelAndView mv = new ModelAndView();
@@ -92,14 +165,7 @@ public class MemberController {
     //     }
 
     // }
-    //로그인 완료시 상세페이지로
-    @RequestMapping(path="/sung/detail")
-    public ModelAndView detail(MemberVo vo){
-        ModelAndView mv = new ModelAndView();
-        mv.addObject("vo", vo);
-        mv.setViewName("sung/detail");
-        return mv;
-    }
+  
     //회원등록폼
     @RequestMapping(path="/sung/registerF")
     public ModelAndView registerF(){

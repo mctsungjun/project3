@@ -1,6 +1,7 @@
 package com.myjob.member.dao;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
@@ -9,6 +10,7 @@ import org.springframework.stereotype.Component;
 import com.myjob.member.mybatis.MyFactory;
 import com.myjob.member.passHash.PasswordHash;
 import com.myjob.member.vo.MemberVo;
+import com.myjob.member.vo.PhotoVo;
 
 @Component
 public class MemberDao {
@@ -29,13 +31,14 @@ public class MemberDao {
         }else{
             session.rollback();
         }
+        session.close();
         return b;
     }
-
+// 로그인
     public MemberVo login(String id,String password){
         session = new MyFactory().getSession();
-       
-        String hashPassword = PasswordHash.hashPassword(password);
+       try{
+             String hashPassword = PasswordHash.hashPassword(password);
         MemberVo vo = new MemberVo();
         Object ob =(Object)vo;
         ob = session.selectOne("member.login",id);
@@ -54,9 +57,43 @@ public class MemberDao {
         }else{
             System.out.println("해당 아이디가 존재하지 않습니다.");
             return null;
+        
         }
-       
+        
+       }finally{
+        if(session !=null){
+
+            session.close();
+        }
+    }
+   
 
         
+    }
+//상세페이지 정보요청
+    public MemberVo detail(String id){
+        session = new MyFactory().getSession();
+        List<PhotoVo> list = null;
+        MemberVo vo = session.selectOne("member.login", id);
+        list = session.selectList("member.photos", id);
+        vo.setPhotos(list);
+        return vo;
+    }
+
+//사진 파일 업로드
+    public String fileUpload(MemberVo vo){
+        System.out.println(vo.toString());
+        String msg = "";
+        session= new MyFactory().getSession();
+        int cnt = session.insert("member.fileUpload", vo);
+        if (cnt>0){
+            session.commit();
+            msg="ok";
+        }else{
+            session.rollback();
+            msg="fail";
+        }
+        session.close();
+        return msg;
     }
 }

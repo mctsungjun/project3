@@ -9,7 +9,7 @@
     <script defer src="js/index.js"></script>
     <script defer src="js/register.js"></script>
     <script defer src="js/naverKakaoLogin.js"></script>
-  
+    
 </head>
 <body>
     <div class="container">
@@ -22,9 +22,25 @@
     
           <h1 class="text-info">회원관리</h1>
     
-          <div class="col-md-3 text-end">
-            <button type="button" class="btn btn-outline-primary me-2 login" onClick="loginForm();">Login</button>
-            <button type="button" class="btn btn-primary register" onClick="registerForm();">Sign-up</button>
+          <div class="col-md-3 text-start">
+            <th:block th:if="${session.id eq null}">
+            
+              <button type="button" class="btn btn-outline-primary me-2 login" onClick="loginForm();">Login</button>
+              <button type="button" class="btn btn-primary register" onClick="registerForm();">Sign-up</button>
+            </th:block>
+            <th:block th:if="${session.id ne null}">
+              <div class="d-flex flex-column">
+                
+                <div class="bg-warning-subtle">
+                <span class="text-info-emphasis">[[${session.name}]]</span>님
+                </div>
+                <button type="button" class="btn btn-outline-info btn-sm" onClick="detail();">상세보기</button>
+                <button type="button" class="btn btn-outline-primary logout btn-sm" onClick="logOut();">logout</button>
+
+              </div>
+              
+              
+            </th:block>
           </div>
         </header>
       </div>

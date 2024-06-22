@@ -13,26 +13,54 @@
             <h2 class="text-center text-primary mb-5 text-body-emphasis fw-bold">회원상세보기</h2>
             <div >
                 <ul class="list-group col-md-5 text-center m-auto">
-                    <li class="list-group-item text-bg-primary" >id:[[${vo.id}]]</li>
-                    <li class="list-group-item text-bg-light">name:  [[${vo.name}]]</li>
-                    <li class="list-group-item text-bg-warning">phone:  [[${vo.phone1}]]-[[${vo.phone2}]]-[[${vo.phone3}]]</li>
-                    <li class="list-group-item text-bg-info">address: [[${vo.roadAddress}]] [[${vo.addressDetail}]]</li>
-                    <li class="list-group-item text-bg-success">email:  [[${vo.email}]]@[[${vo.email2}]]</li>
-                    <li class="list-group-item text-bg-light">birthday:  [[${vo.birthday}]]</li>
+                    <li class="list-group-item  list-group-item-primary text-primary-emphasis" >id:       [[${vo.id}]]</li>
+                    <li class="list-group-item list-group-item-secondary text-secondary-emphasis">name:       [[${vo.name}]]</li>
+                    <li class="list-group-item list-group-item-info text-success-emphasis">phone:     [[${vo.phone1}]]-[[${vo.phone2}]]-[[${vo.phone3}]]</li>
+                    <li class="list-group-item list-group-item-warning text-danger-emphasis ">address:      [[${vo.roadAddress}]] [[${vo.addressDetail}]]</li>
+                    <li class="list-group-item list-group-item-secondary text-warning-emphasis">email:     [[${vo.email}]]@[[${vo.email2}]]</li>
+                    <li class="list-group-item list-group-item-dark text-info-emphasis ">birthday:    [[${vo.birthday}]]</li>
                   </ul>
 
             </div>
-            <!-- <div class="container mt-5 ">
+            <div class="container mt-5 photoSection">
                 <h2 class="text-center text-info display-4 fst-italic">대표이미지</h2>
-                <div class="col-md-3 m-auto mt-5">
-
-                    <div class="photo_list ">
-                        <div class="card "  >
-                            
+                <div class="photo_list row">
+                    <div class="col-md-4 mb-3" th:each="p : ${vo.photos}">
+                        <div class="d-flex justify-content-center">
+                            <div class="img-container">
+                                <img class="mx-1" th:src="|upload/${p.photo}|"
+                                     th:class="${(vo.photo eq p.photo)? 'repre':''}"
+                                     th:onClick="change(this, [[${p.photo}]])" >
+                            </div>
                         </div>
-                    </div>  
+                    </div>
                 </div>
-            </div>  -->
+            </div>
+            <style>
+                .img-container{
+                    width: 150px;
+                    height: 150px;
+                   
+                }
+                .img-container img{
+                    width:100%;
+                    height:100%;
+                    object-fit:cover;
+                }
+                .photo_list {
+                    gap: 5px; /* 이미지 간격을 5px로 설정 */
+                }
+            </style>
+            <div class="col-md-5 m-auto mt-3 mb-5" >
+
+                <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
+                    <button type="button" class="btn btn-outline-primary btnModify">수정</button>
+                    <button type="button" class="btn btn-outline-primary btnChangePhoto" title="이미지를 선택후 클릭하세요">대표이미지 수정</button>
+                    <button type="button" class="btn btn-outline-primary" title="이미지파일을 등록하세요" onClick="regiPhoto()">이미지등록</button>
+                    <button type="button" class="btn btn-outline-primary btnGoHome">홈</button>
+                    <button type="button" class="btn btn-outline-primary btnDelete">삭제</button>
+                </div>
+            </div>
         </div> 
            
     </div>

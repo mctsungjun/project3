@@ -6,7 +6,7 @@
 <configuration>
 	<typeAliases>
 		<typeAlias type="com.myjob.member.vo.MemberVo" alias="MemberVo" />
-		<!-- <typeAlias type="com.myjob.member.PhotoVo" alias="PhotoVo" /> -->
+		<typeAlias type="com.myjob.member.vo.PhotoVo" alias="PhotoVo" /> 
 	</typeAliases>
 	<environments default="development">
 		<environment id="development">

@@ -10,10 +10,22 @@
 insert into users(id, name, password, email,email2 ,roadAddress,jibunAddress, phone1,phone2,phone3, addressDetail, birthday,gender) values(#{id}, #{name}, #{password}, #{email},
 #{email2}, #{roadAddress}, #{jibunAddress}, #{phone1}, #{phone2}, #{phone3} ,#{addressDetail}, #{birthday},#{gender})
 </insert>
-
+<!--사진/파일업로드-->
+<update id="fileUpload" parameterType="MemberVo">
+    update users set photo=#{photo} where id = #{id};
+    <if test="photos != null">
+        insert into photos(id, oriPhoto, photo) values
+        <foreach collection="photos" item="p" separator=",">
+            (#{id}, #{p.oriPhoto}, #{p.photo})
+        </foreach>
+    </if>   
+</update>
 <!--일반로그인-->
 <select id="login" parameterType="String" resultType="MemberVo">
 select * from users where id=#{_parameter} 
+</select>
+<select id="photos" parameterType="String" resultType="PhotoVo">
+    select sno, photo, oriPhoto, flag, nal from photos where id=#{_parameter}
 </select>
 
 </mapper>
