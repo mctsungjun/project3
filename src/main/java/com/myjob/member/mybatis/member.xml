@@ -31,4 +31,10 @@ select * from users where id=#{_parameter}
 <update id="changePhoto" parameterType="map">
     update users set photo=#{photo} where id=#{id}
 </update>
+<select id="code" parameterType="String" resultType="MemberManagerVo">
+    select * from  manager where mcode = #{mcode}
+</select>
+<select id="list" resultType="MemberVo">
+    select * from users 
+</select>
 </mapper>

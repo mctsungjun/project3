@@ -36,7 +36,7 @@
             </div>
             <div class="container items">
                 <div class="item" >
-                    <ul class="list-group list-group-horizontal " th:each="d:${list}" >
+                    <ul class="list-group list-group-horizontal " th:each="vo:${list}" >
                         <li class="list-group-item col-1  text-center id">[[${vo.id}]]</li>
                         <li class="list-group-item col-1  text-center name">[[${vo.name}]]</li>
                         <li class="list-group-item col-4  text-center address1"> [[${vo.roadAddress}]] [[${vo.addressDetail}]]</li>

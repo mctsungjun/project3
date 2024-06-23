@@ -9,6 +9,7 @@ import org.springframework.stereotype.Component;
 
 import com.myjob.member.mybatis.MyFactory;
 import com.myjob.member.passHash.PasswordHash;
+import com.myjob.member.vo.MemberManagerVo;
 import com.myjob.member.vo.MemberVo;
 import com.myjob.member.vo.PhotoVo;
 
@@ -122,10 +123,25 @@ public class MemberDao {
         List<PhotoVo> list = null;
         MemberVo vo = session.selectOne("member.login", id);
         list = session.selectList("member.photos", id);
-        
+
         vo.setPhotos(list);
         session.close();
         return vo;
 
+    }
+
+    // 리스트폼
+    public List<MemberVo> list(String code){
+        session = new MyFactory().getSession();
+        MemberManagerVo reCode = session.selectOne("member.code", code);
+        System.out.println(reCode);
+        if (reCode !=null){
+            List<MemberVo> list = session.selectList("member.list");
+            session.close();
+            return list;
+        }else{
+            session.close();
+            return null;
+        }
     }
 }

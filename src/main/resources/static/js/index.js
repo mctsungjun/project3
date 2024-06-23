@@ -78,6 +78,22 @@ let btnGoHome = ()=>{
 	location.href="/";
 }
 
+// 목록으로 이동 (관리자만)
+let btnListForm = ()=>{
+	let managerCode = prompt("관리코드를 입력하세요");
+	if( managerCode !=null && managerCode !=""){
+		$.ajax({
+			url:"/sung/list",
+			type:"GET",
+			data:{"code":managerCode},
+			success:(resp)=>{
+				let temp =$(resp).find(".change");
+				$(".change").html(temp);
+			}
+		})
+	}
+}
+
 //회원가입 버튼 클릭됨-----------------------------------------
 let registerForm=()=>{
     $.ajax({

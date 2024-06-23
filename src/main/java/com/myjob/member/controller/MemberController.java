@@ -175,6 +175,19 @@ public ModelAndView repreChangForm(HttpSession session){
         String msg = dao.changePhoto(id, photo);
         return msg;
     }
+//리스트 폼으로 가기
+    @RequestMapping(path="/sung/list")
+    public ModelAndView list(String code){
+        ModelAndView mv = new ModelAndView();
+        System.out.println(code);
+        List<MemberVo> list = new ArrayList<>();
+        list = dao.list(code);
+        System.out.println(list);
+        mv.addObject("list", list);
+        mv.setViewName("sung/list");
+        return mv;
+    }
+
     // 로그인 완료시 메인페이지 사용자 이름과 로그아웃 활성화
 
 
