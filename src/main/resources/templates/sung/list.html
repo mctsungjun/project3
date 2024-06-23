@@ -37,11 +37,11 @@
             <div class="container items">
                 <div class="item" >
                     <ul class="list-group list-group-horizontal " th:each="d:${list}" >
-                        <li class="list-group-item col-1  text-center id">[[${d.id}]]</li>
-                        <li class="list-group-item col-1  text-center name">[[${d.name}]]</li>
-                        <li class="list-group-item col-4  text-center address1">[[${d.address}]]</li>
-                        <li class="list-group-item col-3  text-center phone">[[${d.phone}]]</li>
-                        <li class="list-group-item col-3  text-center phone">[[${d.email}]]</li>
+                        <li class="list-group-item col-1  text-center id">[[${vo.id}]]</li>
+                        <li class="list-group-item col-1  text-center name">[[${vo.name}]]</li>
+                        <li class="list-group-item col-4  text-center address1"> [[${vo.roadAddress}]] [[${vo.addressDetail}]]</li>
+                        <li class="list-group-item col-3  text-center phone">[[${vo.phone1}]]-[[${vo.phone2}]]-[[${vo.phone3}]]</li>
+                        <li class="list-group-item col-3  text-center phone">[[${vo.email}]]@[[${vo.email2}]]</li>
                        
                     </ul>
                 </div>

@@ -29,9 +29,11 @@ let detail = ()=>{
 		success:(resp)=>{
 			let temp = $(resp).find(".change");
 			$(".change").html(temp);
+			
 		}
 	})
 }
+// 대표이미지 바뀌때 테두리변함
 let repreImage="";
 let change=(tag,photo)=>{
 	let allImg = document.querySelectorAll(".photo_list img");
@@ -42,6 +44,39 @@ let change=(tag,photo)=>{
 	repreImage=photo;
 }
 
+//대표 이미지 수정폼
+
+
+let	btnChangePhoto=()=>{
+		$.ajax({
+			url:"/sung/repreChangeForm",
+			type:"GET",
+			success:(resp)=>{
+				let temp = $(resp).find(".photoSection");
+				$(".photoSection").html(temp);
+				// 대표이미지수정
+				let btnRepreChange = document.querySelector(".btnRepreChange");
+				btnRepreChange.onclick=()=>{
+					var id = sessionStorage.getItem("id");
+					
+				
+					$.ajax({
+						url:"/sung/changePhoto",
+						type:"GET",
+						data:{"id": id,"photo":repreImage},
+						success:(resp)=>{
+							detail();
+						
+						}
+					})
+				}
+			}
+		})
+	}
+// 홈으로 이동---------------------------------------------
+let btnGoHome = ()=>{
+	location.href="/";
+}
 
 //회원가입 버튼 클릭됨-----------------------------------------
 let registerForm=()=>{
@@ -54,7 +89,7 @@ let registerForm=()=>{
         }
     })
 }
-//이미지등록버튼 클릭됨
+//이미지등록버튼 클릭됨-------------------------------------------------
 function regiPhoto() {
 	// photoSection의 내용을 새로운 내용으로 변경
 	var photoSection = document.querySelector('.photoSection');
@@ -74,7 +109,7 @@ function regiPhoto() {
 	</div>
 	`;
 }
-//대표이미지 선택
+//대표이미지 선택---------------------------------------------
 let fileChange=(tag)=>{
 	let repre = document.querySelector(".repre");
 	repre.innerHTML = ''; // 하위태그 모두 삭제
@@ -97,23 +132,9 @@ let fileChange=(tag)=>{
 		repre.appendChild(br)
 	}
 }
-// 대표이미지수정
 
-changePhoto=()=>{
-	var id = sessionStorage.getItem("id");
-	
-	photoSection.innerHTML=photoSectionHTml;
-	$.ajax({
-		url:"/sung/changePhoto",
-		type:"GET",
-		data:{"id": id,"photo":repreImage},
-		success:(resp)=>{
-			alert(resp);
-		}
-	})
-}
 
-//사진/파일 업로드
+//사진/파일 업로드-----------------------------------------------
 function uploadFiles(){
 	let input = document.getElementById('fileInput');
 	let frmData = new FormData();
@@ -137,7 +158,7 @@ function uploadFiles(){
 	})
 }
 
-// 수정버튼 클릭됨
+// 수정버튼 클릭됨-------------------------------------------
 
 let modifyFrom=()=>{
 	let id = sessionStorage.getItem("id");
@@ -153,7 +174,7 @@ let modifyFrom=()=>{
 	})
 }
 
-//아이디/비번 찾기폼
+//아이디/비번 찾기폼------------------------------------
   
 function findIdPwd() {
        
@@ -170,7 +191,7 @@ function findIdPwd() {
         });
     };
 
-// 아이디/비번찾기 함수들
+// 아이디/비번찾기 함수들-------------------------------------------
 function inputSendit(num) {
 	if(keyCode==13) {
 		idpwsearch(num);
@@ -223,7 +244,7 @@ function multi_chkpw(){
 		$('#ok_multipw').show();
 	}
 }
-// 체크박스 선택시 필요한 양식 표시
+// 체크박스 선택시 필요한 양식 표시-------------------------------------------
 
 function joinform_chk(event)     
 {
@@ -370,7 +391,7 @@ function joinform_chk(event)
         }
 
 
- // 아이디체크
+ // 아이디체크----------------------------------------------------
 function userChk()
 {
 
@@ -415,7 +436,7 @@ function userChk()
 
     
 }
-//이메일 option값 input에 넣기
+//이메일 option값 input에 넣기-------------------------------------------
 function updateEmailInput(){
     var select = document.getElementById("email_sel");
     var selectedValue = select.value;
@@ -431,4 +452,3 @@ function updateEmailInput(){
 
     
   
-

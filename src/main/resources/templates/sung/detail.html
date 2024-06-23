@@ -22,7 +22,8 @@
                   </ul>
 
             </div>
-            <div class="container mt-5 photoSection">
+            <div class="photoSection">
+                <div class="container mt-5 ">
                 <h2 class="text-center text-info display-4 fst-italic">대표이미지</h2>
                 
                 <div class="photo_list row d-flex justify-content-center">
@@ -35,6 +36,8 @@
                     </div>
                 </div>
             </div>
+            </div>
+            
             <style>
                 .img-container{
                     width: 150px;
@@ -50,18 +53,19 @@
                     gap: 5px; /* 이미지 간격을 5px로 설정 */
                 }
             </style>
-            <div class="col-md-4 m-auto mt-3 mb-5" >
+            <div class="col-md-5 m-auto mt-3 mb-5" >
 
                 <div class="btn-group btn-group-lg" role="group" aria-label="Large button group">
                     <button type="button" class="btn btn-outline-primary btnModify" onClick="modifyFrom()">수정</button>
-                    <button type="button" class="btn btn-outline-primary btnChangePhoto" >대표이미지 수정</button>
-                    <button type="button" class="btn btn-outline-primary" title="이미지파일을 등록하세요" onClick="regiPhoto()">이미지등록</button>
-                    <button type="button" class="btn btn-outline-primary btnGoHome">홈</button>
-                    <button type="button" class="btn btn-outline-primary btnDelete">삭제</button>
+                    <button type="button" class="btn btn-outline-primary " onClick="btnChangePhoto()" >대표이미지 수정</button>
+                    <button type="button" class="btn btn-outline-primary" title="이미지파일을 등록하세요" onClick="regiPhoto()" >이미지등록</button>
+                    <button type="button" class="btn btn-outline-primary" onClick="btnGoHome()" >홈</button>
+                    <button type="button" class="btn btn-outline-primary btnDelete">목록</button>
                 </div>
             </div>
         </div> 
            
     </div>
+    
 </body>
 </html>

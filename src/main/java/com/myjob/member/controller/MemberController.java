@@ -159,7 +159,16 @@ public ModelAndView updateFrom(@RequestParam("id") String id){
     return mv;
 
 }
-
+//대표이미지 수정폼
+@RequestMapping(path="/sung/repreChangeForm")
+public ModelAndView repreChangForm(HttpSession session){
+    ModelAndView mv = new ModelAndView();
+    String id = (String)session.getAttribute("id");
+    MemberVo vo =dao.detail(id);
+    mv.addObject("vo", vo);
+    mv.setViewName("sung/reprePhoto");
+    return mv;
+}
 //대표이미지 바꾸기
     @RequestMapping(path="/sung/changePhoto")
     public String changePhoto(String id, String photo){
