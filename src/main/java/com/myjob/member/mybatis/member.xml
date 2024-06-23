@@ -27,5 +27,8 @@ select * from users where id=#{_parameter}
 <select id="photos" parameterType="String" resultType="PhotoVo">
     select sno, photo, oriPhoto, flag, nal from photos where id=#{_parameter}
 </select>
-
+<!--대표이미지-->
+<update id="changePhoto" parameterType="map">
+    update users set photo=#{photo} where id=#{id}
+</update>
 </mapper>

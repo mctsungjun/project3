@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div>
+        <h2 class="text-center text-info display-4 fst-italic">대표이미지</h2>
+                
+        <div class="photo_list row">
+            <div class="col-md-2 mb-3" th:each="p : ${vo.photos}">
+                <div class="d-flex justify-content-center">
+                    <div class="img-container">
+                        <img class="mx-1" th:src="|upload/${p.photo}|"
+                             th:class="${(vo.photo eq p.photo)? 'repre':''}"
+                             th:onClick="change(this, [[${p.photo}]])" >
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

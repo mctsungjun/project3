@@ -27,3 +27,8 @@
 .photo_list {
     gap: 5px; /* 이미지 간격을 5px로 설정 */
 }
+.center-div{
+            
+    left:50%;
+    transform: translate(30%);
+}

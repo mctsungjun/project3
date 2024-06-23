@@ -77,6 +77,7 @@ public class MemberDao {
         MemberVo vo = session.selectOne("member.login", id);
         list = session.selectList("member.photos", id);
         vo.setPhotos(list);
+        session.close();
         return vo;
     }
 
@@ -95,5 +96,36 @@ public class MemberDao {
         }
         session.close();
         return msg;
+    }
+    // 대표사진
+        public String changePhoto(String id, String photo){
+            session = new MyFactory().getSession();
+            String msg ="";
+            Map<String, String> map = new HashMap<>();
+            map.put("id",id);
+            map.put("photo",photo);
+            int cnt = session.insert("member.changePhoto", map);
+            if(cnt>0){
+                session.commit();
+                msg = "ok";
+            }else{
+                session.rollback();
+                msg = "fail";
+            }
+            session.close();
+            return msg;
+        }
+    // 수정
+    
+    public MemberVo updateFrom(String id){
+        session = new MyFactory().getSession();
+        List<PhotoVo> list = null;
+        MemberVo vo = session.selectOne("member.login", id);
+        list = session.selectList("member.photos", id);
+        
+        vo.setPhotos(list);
+        session.close();
+        return vo;
+
     }
 }

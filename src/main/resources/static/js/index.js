@@ -97,6 +97,21 @@ let fileChange=(tag)=>{
 		repre.appendChild(br)
 	}
 }
+// 대표이미지수정
+
+changePhoto=()=>{
+	var id = sessionStorage.getItem("id");
+	
+	photoSection.innerHTML=photoSectionHTml;
+	$.ajax({
+		url:"/sung/changePhoto",
+		type:"GET",
+		data:{"id": id,"photo":repreImage},
+		success:(resp)=>{
+			alert(resp);
+		}
+	})
+}
 
 //사진/파일 업로드
 function uploadFiles(){
@@ -122,8 +137,21 @@ function uploadFiles(){
 	})
 }
 
+// 수정버튼 클릭됨
 
+let modifyFrom=()=>{
+	let id = sessionStorage.getItem("id");
+	$.ajax({
+		url:"/sung/modify",
+		type:"GET",
+		data:{"id":id},
+		success:(resp)=>{
+			let temp =$(resp).find(".change");
+			$(".change").html(temp);
+		}
 
+	})
+}
 
 //아이디/비번 찾기폼
   

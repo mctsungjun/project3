@@ -97,7 +97,14 @@ public class MemberController {
           String id = (String)sesssion.getAttribute("id");
           System.out.println("id:"  +id);
           MemberVo vo = dao.detail(id);
-
+          if(vo.getPhoto() !=null && !vo.getPhoto().equals("vo")){
+            for(PhotoVo pv:vo.getPhotos()){
+                if(pv.photo.contains(vo.getPhoto())){
+                    vo.setPhoto(pv.photo);;
+                }
+            }
+          }
+        System.out.println(vo);
           mv.addObject("vo", vo);
           mv.setViewName("sung/detail");
           return mv;
@@ -142,7 +149,23 @@ public class MemberController {
         String msg = dao.fileUpload(vo);
         return msg;
       }
+// 수정폼/정보가져오기
+@RequestMapping(path="/sung/modify" )
+public ModelAndView updateFrom(@RequestParam("id") String id){
+    ModelAndView mv = new ModelAndView();
+    MemberVo vo = dao.updateFrom(id);
+    mv.addObject("vo", vo);
+    mv.setViewName("sung/update");
+    return mv;
 
+}
+
+//대표이미지 바꾸기
+    @RequestMapping(path="/sung/changePhoto")
+    public String changePhoto(String id, String photo){
+        String msg = dao.changePhoto(id, photo);
+        return msg;
+    }
     // 로그인 완료시 메인페이지 사용자 이름과 로그아웃 활성화
 
 
